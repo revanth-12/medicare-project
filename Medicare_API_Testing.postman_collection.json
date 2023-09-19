@@ -1,0 +1,81 @@
+{
+	"info": {
+		"_postman_id": "b94bd12a-dc6d-41f5-874b-16cc37262bd0",
+		"name": "Medicare_API_Testing",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "28292242"
+	},
+	"item": [
+		{
+			"name": "http://localhost:8080/medicare/show/all/products",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"status code is 200\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"validate body of response\", () => {\r",
+							"    // Check if the response content type is JSON\r",
+							"    const contentTypeHeader = pm.response.headers.get(\"Content-Type\");\r",
+							"    if (contentTypeHeader && contentTypeHeader.includes(\"text/html\")) {\r",
+							"        // Handle the case of an HTML response\r",
+							"        console.log(\"Received an HTML response. Content-Type: \" + contentTypeHeader);\r",
+							"        // Add any additional assertions or handling specific to HTML responses here\r",
+							"    } else if (contentTypeHeader && contentTypeHeader.includes(\"application/json\")) {\r",
+							"        // Handle the case of a JSON response\r",
+							"        try {\r",
+							"            var jsonData = pm.response.json();\r",
+							"            pm.expect(jsonData.name).to.eql(\"Antipyretics\");\r",
+							"        } catch (error) {\r",
+							"            // Handle the case where JSON parsing fails\r",
+							"            console.log(\"Error parsing JSON response: \" + error.message);\r",
+							"            pm.test(\"JSON Parsing Error\", function () {\r",
+							"                pm.expect.fail(\"Error parsing JSON response\");\r",
+							"            });\r",
+							"        }\r",
+							"    } else {\r",
+							"        // Handle other content types or unknown responses\r",
+							"        console.log(\"Received an unexpected response. Content-Type: \" + contentTypeHeader);\r",
+							"        // Add handling or assertions for other content types here\r",
+							"    }\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8080/medicare/show/category/1/products"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/medicare/show/all/products",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"status code is 200\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8080/medicare/show/all/products"
+			},
+			"response": []
+		}
+	]
+}
